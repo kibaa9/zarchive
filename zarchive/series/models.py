@@ -1,8 +1,7 @@
 from django.db import models
 
 
-class Genre(models.Model):
+class Series(models.Model):
     name = models.CharField(
         max_length=100,
-        unique=True,
     )

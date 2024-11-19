@@ -33,11 +33,14 @@ MY_APPS = [
     "zarchive.accounts.apps.AccountsConfig",
     "zarchive.books.apps.BooksConfig",
     "zarchive.authors.apps.AuthorsConfig",
+    "zarchive.genres.apps.GenresConfig",
+    "zarchive.series.apps.SeriesConfig",
     "zarchive.reviews.apps.ReviewsConfig",
     "zarchive.publishers.apps.PublishersConfig",
     "zarchive.book_requests.apps.BookRequestsConfig",
     "zarchive.reading_lists.apps.ReadingListsConfig",
-    "zarchive.genres.apps.GenresConfig",
+    "zarchive.dictionaries.apps.DictionariesConfig",
+    "zarchive.common.apps.CommonConfig",
 ]
 
 INSTALLED_APPS = [
