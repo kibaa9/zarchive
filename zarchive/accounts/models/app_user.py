@@ -2,8 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext_lazy as _
-
-from zarchive.accounts.managers import UserManager
+from zarchive.accounts.managers import AppUserManager
 
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
@@ -29,9 +28,9 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'email']
+    REQUIRED_FIELDS = ['email',]
 
     def __str__(self):
         return self.username
 
-    objects = UserManager()
+    objects = AppUserManager()

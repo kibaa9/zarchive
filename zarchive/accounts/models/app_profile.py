@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
 from django.db import models
+from zarchive.accounts.models import AppUser
 
 
 class Profile(models.Model):
     user = models.OneToOneField(
-        to=User,
+        to=AppUser,
         on_delete=models.CASCADE,
         primary_key=True,
     )

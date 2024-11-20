@@ -1,13 +1,12 @@
-from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-
+from zarchive.accounts.models import AppUser
 from zarchive.books.models import Book
 
 
 class Review(models.Model):
     author = models.ForeignKey(
-        to=User,
+        to=AppUser,
         on_delete=models.CASCADE,
     )
 
