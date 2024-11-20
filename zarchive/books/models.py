@@ -54,4 +54,3 @@ class Book(models.Model):
     has_been_adapted = models.BooleanField(
         default=False,
     )
-
