@@ -5,4 +5,5 @@ from zarchive import common
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('zarchive.common.urls')),
+    path('account/', include('zarchive.accounts.urls')),
 ]

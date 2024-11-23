@@ -11,6 +11,7 @@ class AppUserManager(BaseUserManager):
         """
         Create and save a user with the given username, email, and password.
         """
+        username = username.lower()
         if not username:
             raise ValueError("The given username must be set")
         email = self.normalize_email(email)
