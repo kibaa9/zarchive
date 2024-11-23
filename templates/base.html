@@ -1,10 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=\, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}"/>
+    <title>Z-Archive</title>
 </head>
 <body>
+<div id="wrapper">
+    <header>
+        <a id="logo" href="{% url 'home-page' %}">
+            <img id="logo-img" src="{% static 'images/logo.png' %}" alt="logo"/>
+        </a>
+        <nav class="nav">
+                <div class="menu">
+                    <a href="#">All Books</a>
+                    <a href="#">Search</a>
+                    <a href="#">New Books</a>
+                    <a href="#">Top Books</a>
+                    <a href="#">Your List</a>
+                </div>
+                <div class="user">
+                    <a href="#">Login</a>
+                    <a href="#">Sign Up</a>
+                </div>
+        </nav>
+    </header>
+    {% block content %}
 
+    {% endblock %}
+
+    <footer>
+        <p>SoftUni Django Advanced Project 2024 I.B.</p>
+    </footer>
 </body>
 </html>
