@@ -8,6 +8,7 @@ class Review(models.Model):
     author = models.ForeignKey(
         to=AppUser,
         on_delete=models.CASCADE,
+        related_name='reviews'
     )
 
     review = models.TextField(

@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.text import slugify
+
 from zarchive.accounts.models import AppUser
 
 
@@ -7,6 +9,7 @@ class Profile(models.Model):
         to=AppUser,
         on_delete=models.CASCADE,
         primary_key=True,
+        related_name='profile',
     )
 
     name = models.CharField(
@@ -35,6 +38,16 @@ class Profile(models.Model):
         blank=True,
         null=True,
     )
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.user.username)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.user.username
