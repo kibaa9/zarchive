@@ -7,7 +7,7 @@ from zarchive.accounts.models import AppUser
 
 
 class CreateUserPage(CreateView):
-    template_name = 'user/create-user.html'
+    template_name = 'user/create_user.html'
     model = AppUser
     form_class = AppUserForm
     success_url = reverse_lazy('home-page')

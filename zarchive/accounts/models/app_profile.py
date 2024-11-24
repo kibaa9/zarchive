@@ -30,6 +30,11 @@ class Profile(models.Model):
         auto_now_add=True,
     )
 
-    number_of_reviews = models.IntegerField(
-        default=0,
+    profile_picture = models.ImageField(
+        upload_to='profile_pictures/',
+        blank=True,
+        null=True,
     )
+
+    def __str__(self):
+        return self.user.username
