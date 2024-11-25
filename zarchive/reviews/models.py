@@ -1,24 +1,14 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+
 from zarchive.accounts.models import AppUser
 from zarchive.books.models import Book
 
 
 class Review(models.Model):
-    author = models.ForeignKey(
+    user = models.ForeignKey(
         to=AppUser,
         on_delete=models.CASCADE,
-        related_name='reviews'
-    )
-
-    review = models.TextField(
-        max_length=500,
-        blank=True,
-        null=True,
-    )
-
-    rating = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)],
     )
 
     book = models.ForeignKey(
@@ -26,3 +16,16 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name='reviews',
     )
+
+    rating = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
+
+    comment = models.TextField()
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return f'Review by {self.user.username} for {self.book.title}'

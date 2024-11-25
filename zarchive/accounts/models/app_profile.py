@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.text import slugify
-
 from zarchive.accounts.models import AppUser
 
 
@@ -24,6 +23,10 @@ class Profile(models.Model):
         null=True,
     )
 
+    is_author = models.BooleanField(
+        default=False,
+    )
+
     date_of_birth = models.DateField(
         blank=True,
         null=True,
@@ -34,7 +37,7 @@ class Profile(models.Model):
     )
 
     profile_picture = models.ImageField(
-        upload_to='profile_pictures/',
+        upload_to='static/images/profile_pictures/',
         blank=True,
         null=True,
     )

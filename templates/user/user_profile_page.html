@@ -14,7 +14,7 @@
         <p>Total reviews given: {{ review_count }}</p>
         {% if request.user.profile.slug == profile.slug %}
             <a href="{% url 'profile_edit_page' request.user.profile.slug %}">Edit</a>
-            {#            <a href="#">Delete</a>#}
+            <a href="{% url 'user_delete_page' request.user.profile.slug %}">Delete</a>
         {% endif %}
     {% else %}
         <h2>You're not logged in<a href="{% url 'login_page' %}">Log In</a></h2>

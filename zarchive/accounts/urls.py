@@ -10,5 +10,6 @@ urlpatterns = [
     path('profile/<slug:slug>/', include([
         path('', views.ProfileDetailsPage.as_view(), name='profile_details_page'),
         path('edit/', views.EditProfilePage.as_view(), name='profile_edit_page'),
+        path('delete/', views.UserDeletePage.as_view(), name='user_delete_page'),
     ]))
 ]
