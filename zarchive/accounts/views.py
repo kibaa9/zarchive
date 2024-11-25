@@ -4,7 +4,7 @@ from django.db.models import Count
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DetailView
 from django.views.generic.edit import CreateView, DeleteView
-from zarchive.accounts.forms import AppUserForm, ProfileForm
+from zarchive.accounts.forms import AppUserForm, ProfileForm, EditProfileForm
 from zarchive.accounts.models import AppUser, Profile
 
 
@@ -24,19 +24,14 @@ class ProfileDetailsPage(LoginRequiredMixin, DetailView):
     template_name = 'user/user_profile_page.html'
     context_object_name = 'profile'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #
-    #     profile = self.object
-    #     context['review_count'] = profile.user.reviews.annotate(books_count=Count('book'))
-    #     return context
-
 
 class EditProfilePage(LoginRequiredMixin, UpdateView):
     model = Profile
-    form_class = ProfileForm
+    form_class = EditProfileForm
     template_name = 'user/profile_edit_page.html'
-    success_url = reverse_lazy('profile_details_page')
+
+    def get_success_url(self):
+        return reverse_lazy('profile_details_page', kwargs={'slug': self.object.slug})
 
 
 class UserDeletePage(LoginRequiredMixin, DeleteView):

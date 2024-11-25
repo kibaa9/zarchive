@@ -1,4 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
+<section>
+        <div class="form">
+            <h2>Edit User Profile</h2>
 
+            <form method="post">
+                {{ form }}
+                {% csrf_token %}
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </section>
 {% endblock %}

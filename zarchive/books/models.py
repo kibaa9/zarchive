@@ -27,6 +27,8 @@ class Book(models.Model):
 
     publisher = models.CharField(
         max_length=100,
+        blank=True,
+        null=True,
     )
 
     cover_image = models.ImageField(

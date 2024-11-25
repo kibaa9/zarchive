@@ -1,6 +1,9 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import ListView
+from zarchive.books.models import Book
 
 
-class HomePage(TemplateView):
-    template_name = 'common/home.html'
+class HomePage(ListView):
+        model = Book
+        template_name = 'common/home.html'
+        context_object_name = 'book_list'
+        paginate_by = 10

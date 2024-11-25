@@ -19,5 +19,11 @@ class Author(models.Model):
         null=True,
     )
 
+    profile_picture = models.ImageField(
+        upload_to='static/images/author_profile_pictures',
+        blank=True,
+        null=True,
+    )
+
     def __str__(self):
         return self.name

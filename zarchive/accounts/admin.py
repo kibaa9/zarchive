@@ -11,7 +11,7 @@ UserModel = get_user_model()
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
-    fields = ('name', 'description', 'date_of_birth', 'profile_picture')
+    fields = ('name', 'description', 'is_author', 'date_of_birth', 'profile_picture')
 
 
 @admin.register(UserModel)
