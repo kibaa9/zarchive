@@ -1,0 +1,48 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% block content %}
+    <main>
+        {% if book_list %}
+            <h2 style="text-align:center;" id="catalog">Book Catalog</h2>
+        {% else %}
+            <h2 style="text-align:center;" id="catalog">No books yet</h2>
+        {% endif %}
+
+        <section>
+            {% for book in book_list %}
+                <main class="main-content">
+                <div class="container">
+                    <div class="card">
+                        {% if book.cover_image %}
+                            <a id="logo" href="{% url 'book_detail_page' book.id %}">
+                            <img src="{{ book.cover_image }}" alt="{{ book.title }} Cover">
+                        {% else %}
+                            <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
+                        {% endif %}
+                        <div class="card-content">
+                            <h3>{{ book.title }}</h3>
+                            <p>By</p>
+                            <a href="{% url 'home-page' %}">{{ book.author }}</a>
+                            <p class="description">{{ book.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div>
+
+                {% if is_paginated %}
+                    <div style="text-align:center;">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">First</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        {% endif %}
+                        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            </main>
+{% endblock %}

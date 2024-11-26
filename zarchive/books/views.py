@@ -1,13 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from zarchive.books.forms import CreateBookForm
+from zarchive.books.forms import CreateBookForm, EditBookForm
 from zarchive.books.models import Book
 
 
-class NewBookListView(ListView):
+class BookListView(ListView):
     model = Book
-    template_name = 'common/home.html'  # change template
+    template_name = 'books/book_catalogue_page.html'
     context_object_name = 'book_list'
     paginate_by = 10
 
@@ -35,7 +35,12 @@ class BookCreateView(LoginRequiredMixin, CreateView):
 
 
 class BookUpdateView(UpdateView):
-    pass
+    model = Book
+    form_class = EditBookForm
+    template_name = 'books/book_edit_page.html'
+
+    def get_success_url(self):
+        return reverse_lazy('book-detail', kwargs={'pk': self.object.pk})
 
 
 class BookDeleteView(DeleteView):

@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'common/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block content %}
+<main class="book-detail">
+    <div class="container">
+        <div class="book-detail-wrapper">
+            <div class="book-image">
+                {% if book.cover_image %}
+                    <img src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover Image">
+                {% else %}
+                    <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
+                {% endif %}
+            </div>
+            <div class="book-info">
+                <h1>{{ book.title }}</h1>
+{#                <p><strong>Author:</strong> <a href="{% url 'author_profile' book.author.slug %}">{{ book.author.name }}</a></p>#}
+                <p><strong>Year of publish:</strong> {{ book.year_of_publish }}</p>
+                <p><strong>Pages:</strong> {{ book.pages }}</p>
+                <p><strong>Genre:</strong> {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                <p><strong>Description:</strong> {{ book.description }}</p>
+                <div class="buttons">
+                    <a href="{% url 'book_update_page' book.id %}" class="btn btn-edit">Edit Book</a>
+                    <form action="{% url 'book_delete_page' book.id %}" method="POST" class="delete-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-delete">Delete Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -4,10 +4,9 @@ from zarchive.books.models import Book
 from zarchive.genres.models import Genre
 
 
-class CreateBookForm(forms.ModelForm):
+class BaseBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        exclude = ['created_by', 'genre']
         fields = ['title', 'author', 'description', 'genres', 'custom_genre', 'pages', 'year_of_publish', 'publisher', 'cover_image']
 
     author = forms.CharField()
@@ -20,7 +19,7 @@ class CreateBookForm(forms.ModelForm):
     custom_genre = forms.CharField(
         max_length=40,
         required=False,
-        help_text="Enter a custom genre separated by commas.",
+        help_text="Can't find what you need? Enter a custom genre separated by commas.",
     )
 
     pages = forms.CharField()
@@ -69,3 +68,14 @@ class CreateBookForm(forms.ModelForm):
                 raise forms.ValidationError("Genres should only contain letters.")
             return ','.join(custom_genres_list)
         return custom_genre
+
+
+class CreateBookForm(BaseBookForm):
+    pass
+
+
+class EditBookForm(BaseBookForm):
+    class Meta(BaseBookForm.Meta):
+        exclude = ['created_by', 'genre', 'created_at', 'author']
+
+    pass

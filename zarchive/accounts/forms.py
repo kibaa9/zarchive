@@ -27,7 +27,12 @@ class ProfileForm(forms.ModelForm):
 class EditProfileForm(ProfileForm):
     class Meta:
         model = Profile
-        exclude = ['user', 'is_author', 'slug']
+        fields = ['name', 'description', 'date_of_birth', 'profile_picture']
+
+    profile_picture = forms.ImageField(
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
+    )
 
     widgets = {
         'date_of_birth': forms.DateInput(attrs={

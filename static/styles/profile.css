@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile-detail {
+    padding: 40px 0;
+}
+
+.profile-detail-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.profile-image {
+    flex: 1 1 30%;
+    max-width: 200px;
+    text-align: center;
+}
+
+.profile-image img {
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.profile-info {
+    flex: 1 1 60%;
+    max-width: 600px;
+}
+
+.profile-info h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.profile-info p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.profile-info strong {
+    font-weight: bold;
+}
+
+.buttons {
+    margin-top: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 15px;
+}
+
+.btn-edit {
+    background-color: #3498db;
+    color: white;
+    border: 1px solid #3498db;
+}
+
+.btn-edit:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-delete {
+    background-color: #d57064;
+    color: white;
+    border: 1px solid #e74c3c;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .profile-detail-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-image {
+        margin-bottom: 20px;
+        flex: 0 1 100%;
+    }
+
+    .profile-info {
+        flex: 0 1 100%;
+        text-align: center;
+    }
+
+    .profile-info h1 {
+        font-size: 1.8rem;
+    }
+
+    .profile-info p {
+        font-size: 1rem;
+    }
+}

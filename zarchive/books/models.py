@@ -44,5 +44,9 @@ class Book(models.Model):
         related_name='books',
     )
 
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
     def __str__(self):
         return self.title

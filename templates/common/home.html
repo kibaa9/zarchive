@@ -1,41 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'common/base.html' %}
 {% load static %}
-
 {% block content %}
-    <main>
-        {% if book_list %}
-            <h1>Book List</h1>
-        {% else %}
-            <h1>There is no books yet</h1>
-        {% endif %}
-        <section>
-            {% for book in book_list %}
-                <div>
-                    <img src="{{ book.cover_image }}" alt="cover image"/>
-                    <h3>{{ book.title }}</h3>
-                    <h5>By</h5>
-                    <h4>{{ book.author.name }}</h4>
-                    <p>{{ book.description }}</p>
-                    <a href="{% url 'book_detail_page' book.pk %}">See More</a>
-                </div>
-            {% endfor %}
-        </section>
-        <div>
-            {% if is_paginated %}
-                <div>
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1">First</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                    {% endif %}
-
-                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
-    </main>
+<section class="hero">
+    <div class="container">
+        <h2>Discover a World of Knowledge and Fantasy</h2>
+        <p>Explore our extensive collection of books and digital resources.</p>
+        <a href="{% url 'book_catalogue_page' %}" class="btn">Explore Now</a>
+    </div>
+<div style="text-align:center;">
+       <img style="width: 100%; max-width: 500px; height: auto; border-radius: 8px;
+        transform: translateY(30px);" src="{% static 'images/site_background.png' %}">
+</div>
+</section>
 {% endblock %}
