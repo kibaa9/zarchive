@@ -15,16 +15,17 @@
                 <div class="book-info">
                     <h1>{{ book.title }}</h1>
                     <P>By</P>
-{#<p><strong>Author:</strong> <a href="{% url 'author_profile' book.author.slug %}">{{ book.author.name }}</a></p>#}
+                    {#<p><strong>Author:</strong> <a href="{% url 'author_profile' book.author.slug %}">{{ book.author.name }}</a></p>#}
                     <p><strong>Year of publish:</strong> {{ book.year_of_publish }}</p>
                     <p><strong>Pages:</strong> {{ book.pages }}</p>
                     <p><strong>Genre:</strong>
-                        {% for genre in book.genres.all %}{{ genre.name }}{% if not forloop.last %},
+                        {% for genre in book.genre.all %}{{ genre.name }}{% if not forloop.last %},
                         {% endif %}{% endfor %}</p>
+                    <p><strong>Publisher:</strong> {{ book.publisher }}</p>
                     <p><strong>Description:</strong> {{ book.description }}</p>
                     {% if user == book.created_by %}
                         <div class="buttons">
-                            <a href="{% url 'book_update_page' book.id %}" class="btn btn-edit">Edit Book</a>
+                            <a href="{% url 'book_edit_page' book.id %}" class="btn btn-edit">Edit Book</a>
                             <form action="{% url 'book_delete_page' book.id %}" method="POST" class="delete-form">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-delete">Delete Book</button>

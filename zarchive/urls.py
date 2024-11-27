@@ -7,4 +7,5 @@ urlpatterns = [
     path('', include('zarchive.common.urls')),
     path('account/', include('zarchive.accounts.urls')),
     path('books/', include('zarchive.books.urls')),
+    path('author/', include('zarchive.authors.urls')),
 ]

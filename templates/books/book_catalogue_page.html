@@ -7,7 +7,6 @@
         {% else %}
             <h2 style="text-align:center;" id="catalog">No books yet</h2>
         {% endif %}
-
         <section>
             {% for book in book_list %}
                 <main class="main-content">
@@ -15,7 +14,7 @@
                     <div class="card">
                         {% if book.cover_image %}
                             <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                            <img src="{{ book.cover_image }}" alt="{{ book.title }} Cover">
+                            <img id=logo-img src="{{ book.cover_image }}" alt="{{ book.title }} Cover">
                         {% else %}
                             <a id="logo" href="{% url 'book_detail_page' book.id %}">
                             <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
@@ -25,8 +24,8 @@
                             <h4>By</h4>
                             <a href="{% url 'home-page' %}">{{ book.author }}</a>
                             <p>Genres:</p>
-                            {% for genre in book.genres.all %}
-                                {{ genre.name }}
+                            {% for genre in book.genre.all %}
+                                {{ genre.name }}{% if not forloop.last %}, {% endif %}
                                 {% endfor%}
                             <p class="description">{{ book.description }}</p>
                         </div>

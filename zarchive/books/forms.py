@@ -4,7 +4,7 @@ from zarchive.books.models import Book
 from zarchive.genres.models import Genre
 
 
-class BaseBookForm(forms.ModelForm):
+class BookBaseForm(forms.ModelForm):
     class Meta:
         model = Book
         exclude = ['created_by', ]
@@ -41,8 +41,8 @@ class BaseBookForm(forms.ModelForm):
         return custom_genre
 
 
-class CreateBookForm(BaseBookForm):
-    class Meta(BaseBookForm.Meta):
+class BookCreateForm(BookBaseForm):
+    class Meta(BookBaseForm.Meta):
         fields = ['title', 'author', 'description', 'genres', 'custom_genre', 'pages', 'year_of_publish', 'publisher',
                   'cover_image']
 
@@ -53,7 +53,6 @@ class CreateBookForm(BaseBookForm):
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        print(self.cleaned_data)
         author_name = self.cleaned_data['author']
         author, created = Author.objects.get_or_create(name=author_name)
 
@@ -76,6 +75,28 @@ class CreateBookForm(BaseBookForm):
         return super().save(commit)
 
 
-class EditBookForm(BaseBookForm):
-    class Meta(BaseBookForm.Meta):
+class BookEditForm(BookBaseForm):
+    class Meta(BookBaseForm.Meta):
         fields = ['description', 'genres', 'custom_genre', 'pages', 'year_of_publish', 'publisher', 'cover_image']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields['genres'].initial = self.instance.genre.all()
+
+    def save(self, commit=True):
+        genres = list(self.cleaned_data.pop('genres', []))
+        custom_genre = self.cleaned_data.get('custom_genre', '')
+
+        if custom_genre:
+            for genre_name in custom_genre.split(','):
+                genre, created = Genre.objects.get_or_create(name=genre_name)
+                genres.append(genre)
+
+        book = super().save(commit=False)
+
+        if commit:
+            book.save()
+            book.genre.set(genres)
+            self.save_m2m()
+        return super().save(commit)
