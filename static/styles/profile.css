@@ -58,44 +58,6 @@ body {
     font-weight: bold;
 }
 
-.buttons {
-    margin-top: 30px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-right: 15px;
-}
-
-.btn-edit {
-    background-color: #3498db;
-    color: white;
-    border: 1px solid #3498db;
-}
-
-.btn-edit:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
-}
-
-.btn-delete {
-    background-color: #d57064;
-    color: white;
-    border: 1px solid #e74c3c;
-}
-
-.btn-delete:hover {
-    background-color: #c0392b;
-    border-color: #c0392b;
-}
-
 @media (max-width: 768px) {
     .profile-detail-wrapper {
         flex-direction: column;

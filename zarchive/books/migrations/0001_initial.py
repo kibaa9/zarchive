@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('year_of_publish', models.PositiveSmallIntegerField()),
                 ('publisher', models.CharField(max_length=100)),
                 ('cover_image', models.ImageField(blank=True, null=True, upload_to='static/images/books/covers/')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='books', to='authors.author')),
+                ('authors', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='books', to='authors.authors')),
                 ('created_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='books', to=settings.AUTH_USER_MODEL)),
                 ('genre', models.ManyToManyField(to='genres.genre')),
             ],

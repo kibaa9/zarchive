@@ -28,7 +28,7 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('home-page')
 
     def get_form_kwargs(self):
-        """Pass the current user to the form."""
+        """Inject the user into the form's kwargs."""
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
@@ -40,8 +40,12 @@ class BookUpdateView(UpdateView):
     template_name = 'books/book_edit_page.html'
 
     def get_success_url(self):
-        return reverse_lazy('book-detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('book_detail_page', kwargs={'pk': self.object.pk})
 
 
 class BookDeleteView(DeleteView):
-    pass
+    model = Book
+    pk_url_kwarg = 'pk'
+    template_name = 'books/book_delete_page.html'
+    success_url = reverse_lazy('book_catalogue_page')
+

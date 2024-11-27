@@ -66,18 +66,57 @@ body {
     margin-bottom: 20px;
 }
 
+
 .btn {
+    display: inline-block;
     padding: 10px 20px;
-  background-color: rgba(159, 131, 113, 0.5);
-    color: white;
     text-decoration: none;
+    text-align: center;
     font-weight: bold;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-.btn:hover {
-  background-color: rgba(94, 80, 73, 0.5);
+.btn.g {
+        display: inline-block;
+    padding: 10px 20px;
+  background-color: rgba(159, 131, 113, 0.5);
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn.g:hover {
+  background-color: rgba(79, 65, 56, 0.3);
+    color: white;
+    border: rgba(79, 65, 56, 0.3);
+}
+
+.btn-edit {
+    background-color: #3a90c9;
+    color: white;
+    border-color: #27698c;
+}
+
+.btn-edit:hover {
+    background-color: #1c628d;
+    color: white;
+    border-color: #0b5f8f;
+}
+
+.btn-delete {
+    background-color: #d57064;
+    color: white;
+    border: 1px solid #e74c3c;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+    color: white;
+    border-color: #c0392b;
 }
 
 .main-content {

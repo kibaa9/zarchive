@@ -39,8 +39,7 @@ class Book(models.Model):
 
     created_by = models.ForeignKey(
         to=AppUser,
-        on_delete=models.SET_NULL,
-        null=True,
+        on_delete=models.CASCADE,
         related_name='books',
     )
 

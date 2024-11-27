@@ -7,9 +7,7 @@ from zarchive.genres.models import Genre
 class BaseBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'description', 'genres', 'custom_genre', 'pages', 'year_of_publish', 'publisher', 'cover_image']
-
-    author = forms.CharField()
+        exclude = ['created_by', ]
 
     genres = forms.ModelMultipleChoiceField(
         queryset=Genre.objects.all(),
@@ -28,12 +26,34 @@ class BaseBookForm(forms.ModelForm):
 
     publisher = forms.CharField()
 
+    def clean_author(self):
+        author_name = self.cleaned_data.get('author')
+        author, _ = Author.objects.get_or_create(name=author_name)
+        return author
+
+    def clean_custom_genre(self):
+        custom_genre = self.cleaned_data.get('custom_genre', '')
+        if custom_genre:
+            custom_genres_list = custom_genre.split(',')
+            if not all(genre.isalpha() for genre in custom_genres_list):
+                raise forms.ValidationError("Genres should only contain letters.")
+            return ','.join(custom_genres_list)
+        return custom_genre
+
+
+class CreateBookForm(BaseBookForm):
+    class Meta(BaseBookForm.Meta):
+        fields = ['title', 'author', 'description', 'genres', 'custom_genre', 'pages', 'year_of_publish', 'publisher',
+                  'cover_image']
+
+    author = forms.CharField()
+
     def __init__(self, *args, **kwargs):
-        print(kwargs)
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
+        print(self.cleaned_data)
         author_name = self.cleaned_data['author']
         author, created = Author.objects.get_or_create(name=author_name)
 
@@ -55,27 +75,7 @@ class BaseBookForm(forms.ModelForm):
             self.save_m2m()
         return super().save(commit)
 
-    def clean_author(self):
-        author_name = self.cleaned_data.get('author')
-        author, _ = Author.objects.get_or_create(name=author_name)
-        return author
-
-    def clean_custom_genre(self):
-        custom_genre = self.cleaned_data.get('custom_genre', '')
-        if custom_genre:
-            custom_genres_list = custom_genre.split(',')
-            if not all(genre.isalpha() for genre in custom_genres_list):
-                raise forms.ValidationError("Genres should only contain letters.")
-            return ','.join(custom_genres_list)
-        return custom_genre
-
-
-class CreateBookForm(BaseBookForm):
-    pass
-
 
 class EditBookForm(BaseBookForm):
     class Meta(BaseBookForm.Meta):
-        exclude = ['created_by', 'genre', 'created_at', 'author']
-
-    pass
+        fields = ['description', 'genres', 'custom_genre', 'pages', 'year_of_publish', 'publisher', 'cover_image']
