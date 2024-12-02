@@ -15,12 +15,13 @@
                 <div class="book-info">
                     <h1>{{ book.title }}</h1>
                     <P>By</P>
-                    {#<p><strong>Author:</strong> <a href="{% url 'author_profile' book.author.slug %}">{{ book.author.name }}</a></p>#}
+                    <p><strong>Author:</strong> <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author.name }}</a></p>
                     <p><strong>Year of publish:</strong> {{ book.year_of_publish }}</p>
                     <p><strong>Pages:</strong> {{ book.pages }}</p>
-                    <p><strong>Genre:</strong>
-                        {% for genre in book.genre.all %}{{ genre.name }}{% if not forloop.last %},
-                        {% endif %}{% endfor %}</p>
+                    <p><strong>Genre:</strong><p><strong>Author:</strong> <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author.name }}</a></p>
+                        {% for genre in book.genre.all %} {% if not forloop.last %}
+                           <p><a href="{% url 'genre_catalogue_page' genre.id %}">{{ genre.name }}</a></p>
+                        {% endif %}{% endfor %}
                     <p><strong>Publisher:</strong> {{ book.publisher }}</p>
                     <p><strong>Description:</strong> {{ book.description }}</p>
                     {% if user == book.created_by %}

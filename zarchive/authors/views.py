@@ -12,7 +12,7 @@ class AuthorListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Author.objects.all().order_by('-created_at')
+        return Author.objects.all()
 
 
 class AuthorDetailView(LoginRequiredMixin, DetailView):

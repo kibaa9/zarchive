@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'common/base.html' %}
+{% load static %}
+{% block content %}
+    <main>
+        <h1>{{ author.name }}</h1>
+        <div class="author-detail-container">
+            <div class="author-info">
+                {% if author.profile_picture %}
+                    <img src="{{ author.image.url }}" alt="{{ author.name }}">
+                {% else %}
+                    <img src="{% static 'images/user_placeholder.png' %}" alt="{{ author.name }}">
+                {% endif %}
+                <h2>{{ author.name }}</h2>
+                {% if author.date_of_birth %}
+                    <p><strong>Date of Birth:</strong> {{ author.date_of_birth|date:"F d, Y" }}</p>
+                {% endif %} {% if author.date_of_death %}
+                <p><strong>Date of Death:</strong> {{ author.date_of_death|date:"F d, Y" }}</p>
+            {% endif %} {% if author.bio %}
+                <p class="bio">{{ author.bio }}</p>
+            {% endif %}
+                {% if user.profile.is_author %}
+                    <div class="buttons">
+                        <a href="{% url 'author_edit_page' author.id %}" class="btn btn-edit">Edit Author</a>
+                        <form action="{% url 'author_delete_page' author.id %}" method="POST" class="delete-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-delete">Delete Author</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="author-books">
+                <h3>Books by {{ author.name }}</h3>
+                {% if author.books.all %}
+                    <ul>
+                        {% for book in author.books.all %}
+                            <li class="book-item">
+                                {% if book.cover_image %}
+                                    <a id="logo" href="{% url 'book_detail_page' book.id %}">
+                                    <img id=logo-img src="{{ book.cover_image }}" alt="{{ book.title }} Cover">
+                                {% else %}
+                                    <a id="logo" href="{% url 'book_detail_page' book.id %}">
+                                    <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
+                                {% endif %}
+                                <a href="{% url 'book_detail_page' book.id %}">{{ book.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No books available for this author.</p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
