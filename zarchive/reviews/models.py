@@ -6,9 +6,13 @@ from zarchive.books.models import Book
 
 
 class Review(models.Model):
+    class Meta:
+        unique_together = ('book', 'user')
+
     user = models.ForeignKey(
         to=AppUser,
         on_delete=models.CASCADE,
+        related_name='reviews',
     )
 
     book = models.ForeignKey(

@@ -23,13 +23,19 @@
                             <h3>{{ book.title }}</h3>
                             <h4>By</h4>
                             <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author }}</a>
-                            <p>Genres:</p>
-                            {% for genre in book.genre.all %}
-                                <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
-                                {% if not forloop.last %}
-                                {% endif %}
-                            {% endfor %}
+                            <p>Genres:
+                                {% for genre in book.genre.all %}
+                                    <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
+                                    {% if not forloop.last %}
+                                    {% endif %}
+                                {% endfor %}</p>
                             <p class="description">{{ book.description }}</p>
+                            <p><strong>Average Rating:</strong>
+                                {% if book.average_rating %}
+                                    {{ book.average_rating|floatformat:1 }} / 5
+                                {% else %}
+                                    No ratings yet
+                                {% endif %} </p>
                         </div>
                     </div>
                 </div>

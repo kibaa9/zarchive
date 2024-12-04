@@ -9,4 +9,5 @@ urlpatterns = [
     path('books/', include('zarchive.books.urls')),
     path('authors/', include('zarchive.authors.urls')),
     path('genres/', include('zarchive.genres.urls')),
+    path('reviews/<int:pk>', include('zarchive.reviews.urls')),
 ]

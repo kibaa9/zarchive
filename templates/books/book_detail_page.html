@@ -14,16 +14,23 @@
                 </div>
                 <div class="book-info">
                     <h1>{{ book.title }}</h1>
-                    <P>By</P>
-                    <p><strong>Author:</strong> <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author.name }}</a></p>
-                    <p><strong>Year of publish:</strong> {{ book.year_of_publish }}</p>
+                    <p><strong>Author:</strong> <a
+                            href="{% url 'author_detail_page' book.author.id %}">{{ book.author.name }}</a></p>
+                    <p><strong>Year of Publish:</strong> {{ book.year_of_publish }}</p>
                     <p><strong>Pages:</strong> {{ book.pages }}</p>
-                    <p><strong>Genre:</strong><p><strong>Author:</strong> <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author.name }}</a></p>
-                        {% for genre in book.genre.all %} {% if not forloop.last %}
-                           <p><a href="{% url 'genre_catalogue_page' genre.id %}">{{ genre.name }}</a></p>
-                        {% endif %}{% endfor %}
+                    <p><strong>Genres:</strong>
+                        {% for genre in book.genre.all %}
+                            <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
+                        {% endfor %}
+                    </p>
                     <p><strong>Publisher:</strong> {{ book.publisher }}</p>
                     <p><strong>Description:</strong> {{ book.description }}</p>
+                    <p><strong>Average Rating:</strong>
+                        {% if average_rating %}
+                            {{ average_rating|floatformat:1 }} / 5
+                        {% else %}
+                            No ratings yet
+                        {% endif %} </p>
                     {% if user == book.created_by %}
                         <div class="buttons">
                             <a href="{% url 'book_edit_page' book.id %}" class="btn btn-edit">Edit Book</a>
@@ -33,6 +40,53 @@
                             </form>
                         </div>
                     {% endif %}
+                </div>
+            </div>
+            <div class="review-section">
+                <div class="review-container">
+                    {% if user_review %}
+                        <div class="your-review">
+                            <h2>Your Review</h2>
+                            <p><strong>Rating:</strong> {{ user_review.rating }}/5</p>
+                            <p>{{ user_review.comment }}</p>
+                            <p><em>Submitted on {{ user_review.created_at|date:"H:i, j F Y" }}</em></p>
+                            <div class="buttons">
+                                <a href="{% url 'review_edit_page' user_review.id %}" class="btn btn-edit">Edit
+                                    Review</a>
+                                <form action="{% url 'review_delete_page' user_review.id %}" method="POST"
+                                      class="delete-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-delete">Delete Review</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="add-review">
+                            <h2>Add a Review</h2>
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-submit">Submit Review</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    <div class="all-reviews">
+                        <h2>All Reviews</h2>
+                        <ul>
+                            {% for review in reviews %}
+                                {% if review != user_review %}
+                                    <li>
+                                        <p><strong>{{ review.user.username }}</strong>
+                                            ({{ review.created_at|date:"H:i, j F Y" }})</p>
+                                        <p><strong>Rating:</strong> {{ review.rating }}/5</p>
+                                        <p>{{ review.comment }}</p>
+                                    </li>
+                                {% endif %}
+                            {% empty %}
+                                <p>No reviews yet.</p>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,0 +1,76 @@
+.review-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 800px;
+}
+
+.add-review form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.add-review button {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add-review button:hover {
+    background-color: #45a049;
+}
+
+.all-reviews {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 30px;
+}
+
+.all-reviews ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.all-reviews li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.all-reviews li p {
+    margin: 5px 0;
+}
+
+.your-review {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.your-review .buttons {
+    margin-top: 10px;
+}
+
+.your-review .buttons a,
+.your-review .buttons button {
+    margin-right: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}

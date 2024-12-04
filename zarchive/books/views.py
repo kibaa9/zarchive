@@ -1,8 +1,12 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum, Avg
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from zarchive.books.forms import BookCreateForm, BookEditForm
 from zarchive.books.models import Book
+from zarchive.reviews.forms import ReviewCreateForm
 
 
 class BookListView(ListView):
@@ -12,7 +16,10 @@ class BookListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Book.objects.all().order_by('-created_at')
+        return Book.objects.all().annotate(
+            total_rating=Sum('reviews__rating'),
+            average_rating=Avg('reviews__rating')
+        ).order_by('-created_at')
 
 
 class BookDetailView(LoginRequiredMixin, DetailView):
@@ -20,6 +27,46 @@ class BookDetailView(LoginRequiredMixin, DetailView):
     pk_url_kwarg = 'pk'
     template_name = 'books/book_detail_page.html'
     context_object_name = 'book'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['reviews'] = self.object.reviews.all()
+
+        self.object = Book.objects.annotate(
+            average_rating=Avg('reviews__rating')
+        ).get(pk=self.object.pk)
+
+        context['average_rating'] = self.object.average_rating or 0
+
+        if self.request.user.is_authenticated:
+            user_review = self.object.reviews.filter(user=self.request.user).first()
+            if user_review:
+                context['user_review'] = user_review
+
+        context['form'] = kwargs.get('form') or ReviewCreateForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not request.user.is_authenticated:
+            messages.error(request, "You must be logged in to submit a review.")
+            return redirect('login')
+
+        if self.object.reviews.filter(user=request.user).exists():
+            messages.error(request, "You have already reviewed this book.")
+            return redirect('book_detail_page', pk=self.object.pk)
+
+        form = ReviewCreateForm(request.POST, user=request.user, book=self.object)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.book = self.object
+            review.user = request.user
+            review.save()
+            messages.success(request, "Your review has been added successfully.")
+            return redirect('book_detail_page', pk=self.object.pk)
+
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class BookCreateView(LoginRequiredMixin, CreateView):
@@ -55,3 +102,15 @@ class BookDeleteView(DeleteView):
     template_name = 'books/book_delete_page.html'
     success_url = reverse_lazy('book_catalogue_page')
 
+
+class BookTopListView(ListView):
+    model = Book
+    template_name = 'books/book_catalogue_page.html'
+    context_object_name = 'book_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Book.objects.all().annotate(
+            total_rating=Sum('reviews__rating'),
+            average_rating=Avg('reviews__rating')
+        ).order_by('-average_rating')
