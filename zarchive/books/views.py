@@ -50,6 +50,9 @@ class BookDetailView(LoginRequiredMixin, DetailView):
         user_borrow = Borrow.objects.filter(book=self.object, borrower=self.request.user, is_returned=False).first()
         context['user_borrow'] = user_borrow
 
+        user_borrow_info = Borrow.objects.filter(book=self.object, is_returned=False).first()
+        context['user_borrow_info'] = user_borrow_info
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -142,4 +145,15 @@ class BookBorrowListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Book.objects.all().annotate()
+        return Book.objects.filter(borrows__borrower=self.request.user, borrows__is_returned=False).order_by('-borrows__return_date')
+
+
+class UserListBooksView(ListView):
+    model = Book
+    template_name = 'books/book_catalogue_page.html'
+    context_object_name = 'book_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        user = self.request.user
+        return Book.objects.filter(created_by=user)

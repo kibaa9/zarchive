@@ -36,6 +36,14 @@
                     {% else %}
                         Not available
                     {% endif %}</p>
+                    {% if user == book.created_by %}
+                        <h2>User Borrow Info</h2>
+                        <p>Borrowed by: {{ user_borrow_info.borrower.username }}</p>
+                        <p>Borrowed at: {{ user_borrow_info.borrow_date|date:"j F Y" }}</p>
+                    {% endif %}
+                    {% if user == book.created_by or user_borrow %}
+                        <p>Due Date: {{ user_borrow_info.return_date|date:"j F Y" }}</p>
+                    {% endif %}
                     <div class="buttons">
                         {% if book.is_available %}
                             <a href="{% url 'borrow_book_page' book.pk %}" class="btn btn-borrow">Borrow This Book</a>
