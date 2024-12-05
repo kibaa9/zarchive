@@ -7,11 +7,13 @@ class Borrow(models.Model):
     borrower = models.ForeignKey(
         to=AppUser,
         on_delete=models.CASCADE,
+        related_name='borrowers',
     )
 
     book = models.ForeignKey(
         to=Book,
         on_delete=models.CASCADE,
+        related_name='borrows',
     )
 
     borrow_date = models.DateField(
@@ -19,6 +21,11 @@ class Borrow(models.Model):
     )
 
     return_date = models.DateField(
+        blank=True,
+        null=True,
+    )
+
+    returned_at = models.DateField(
         blank=True,
         null=True,
     )

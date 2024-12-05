@@ -10,4 +10,5 @@ urlpatterns = [
     path('authors/', include('zarchive.authors.urls')),
     path('genres/', include('zarchive.genres.urls')),
     path('reviews/<int:pk>', include('zarchive.reviews.urls')),
+    path('borrow/<int:pk>/', include('zarchive.borrow.urls')),
 ]

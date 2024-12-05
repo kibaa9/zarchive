@@ -1,11 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, Avg
+from django.http import request
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from zarchive.books.forms import BookCreateForm, BookEditForm
 from zarchive.books.models import Book
+from zarchive.borrow.models import Borrow
 from zarchive.reviews.forms import ReviewCreateForm
 
 
@@ -44,6 +46,10 @@ class BookDetailView(LoginRequiredMixin, DetailView):
                 context['user_review'] = user_review
 
         context['form'] = kwargs.get('form') or ReviewCreateForm()
+
+        user_borrow = Borrow.objects.filter(book=self.object, borrower=self.request.user, is_returned=False).first()
+        context['user_borrow'] = user_borrow
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -114,3 +120,26 @@ class BookTopListView(ListView):
             total_rating=Sum('reviews__rating'),
             average_rating=Avg('reviews__rating')
         ).order_by('-average_rating')
+
+
+class BookAvailableListView(ListView):
+    model = Book
+    template_name = 'books/book_catalogue_page.html'
+    context_object_name = 'book_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Book.objects.all().filter(is_available=True).annotate(
+            total_rating=Sum('reviews__rating'),
+            average_rating=Avg('reviews__rating')
+        ).order_by('-average_rating')
+
+
+class BookBorrowListView(ListView):
+    model = Book
+    template_name = 'books/book_catalogue_page.html'
+    context_object_name = 'book_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Book.objects.all().annotate()

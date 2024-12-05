@@ -1,0 +1,17 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="book-detail">
+        <div class="container">
+            <div class="book-detail-wrapper">
+                <div class="book-info">
+                    <h1>{{ publisher.name }}</h1>
+                    <p><strong>Books Published:</strong> {{ count(books) }}</p>
+                    <p><strong>Address:</strong> {{ publisher.address }}</p>
+                    <p><strong>Website:</strong> {{ publisher.website }}</p>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -31,15 +31,29 @@
                         {% else %}
                             No ratings yet
                         {% endif %} </p>
-                    {% if user == book.created_by %}
-                        <div class="buttons">
+                    <p>{% if book.is_available %}
+                        <strong>Available</strong>
+                    {% else %}
+                        Not available
+                    {% endif %}</p>
+                    <div class="buttons">
+                        {% if book.is_available %}
+                            <a href="{% url 'borrow_book_page' book.pk %}" class="btn btn-borrow">Borrow This Book</a>
+                        {% endif %}
+                        {% if user_borrow %}
+                            <form action="{% url 'return_book_page' user_borrow.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-borrow">Return Book</button>
+                            </form>
+                        {% endif %}
+                        {% if user == book.created_by %}
                             <a href="{% url 'book_edit_page' book.id %}" class="btn btn-edit">Edit Book</a>
                             <form action="{% url 'book_delete_page' book.id %}" method="POST" class="delete-form">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-delete">Delete Book</button>
                             </form>
-                        </div>
-                    {% endif %}
+                            </div>
+                        {% endif %}
                 </div>
             </div>
             <div class="review-section">
