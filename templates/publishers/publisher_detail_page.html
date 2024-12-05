@@ -7,9 +7,31 @@
             <div class="book-detail-wrapper">
                 <div class="book-info">
                     <h1>{{ publisher.name }}</h1>
-                    <p><strong>Books Published:</strong> {{ count(books) }}</p>
-                    <p><strong>Address:</strong> {{ publisher.address }}</p>
-                    <p><strong>Website:</strong> {{ publisher.website }}</p>
+                    <p><strong>Address:</strong>
+                        {% if publisher.address %}
+                            {{ publisher.address }}
+                        {% else %}
+                            N/A
+                        {% endif %} </p>
+                    <p><strong>Website:</strong>
+                        {% if publisher.website %}
+                            <a href="{{ publisher.website }}" target="_blank">{{ publisher.website }}</a>
+                        {% else %}
+                            N/A
+                        {% endif %}</p>
+                    <p><strong>Books Published:</strong> {{ book_count }}</p>
+                    <h2>Books Published</h2>
+                    {% if books %}
+                        <ul>
+                            {% for book in books %}
+                                <li>
+                                    <a href="{% url 'book_detail_page' book.id %}">{{ book.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No books published yet.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

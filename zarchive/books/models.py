@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from zarchive.accounts.models import AppUser
 from zarchive.authors.models import Author
@@ -23,7 +24,9 @@ class Book(models.Model):
 
     pages = models.PositiveSmallIntegerField()
 
-    year_of_publish = models.PositiveSmallIntegerField()  # add validators
+    year_of_publish = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1800), MaxValueValidator(2100)]
+    )
 
     publisher = models.CharField(
         max_length=100,

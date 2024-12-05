@@ -2,6 +2,7 @@ from django import forms
 from zarchive.authors.models import Author
 from zarchive.books.models import Book
 from zarchive.genres.models import Genre
+from zarchive.publishers.models import Publisher
 
 
 class BookBaseForm(forms.ModelForm):
@@ -55,6 +56,9 @@ class BookCreateForm(BookBaseForm):
     def save(self, commit=True):
         author_name = self.cleaned_data['author']
         author, created = Author.objects.get_or_create(name=author_name)
+
+        publisher = self.cleaned_data['publisher']
+        publisher, created = Publisher.objects.get_or_create(name=publisher)
 
         genres = list(self.cleaned_data.pop('genres', []))
         custom_genre = self.cleaned_data.get('custom_genre', '')

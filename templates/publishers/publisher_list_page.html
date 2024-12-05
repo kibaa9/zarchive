@@ -1,0 +1,19 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="publisher-list">
+        <div class="container">
+            <h1>Publishers</h1>
+            <ul>
+                {% for publisher in publishers %}
+                    <li>
+                        <a href="{% url 'publisher_detail_page' publisher.id %}">{{ publisher.name }}</a>
+                    </li>
+                {% empty %}
+                    <p>No publishers available.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+{% endblock %}

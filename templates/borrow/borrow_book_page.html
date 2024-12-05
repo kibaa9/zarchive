@@ -1,21 +1,27 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% block content %}
-    <h1>Borrowing Book</h1>
-    <p>Are you sure you want to borrow this book?</p>
-    {% if book.cover_image %}
-        <img src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover Image">
-    {% else %}
-        <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
-    {% endif %}
-    <p><strong>Title:</strong> {{ book.title }}</p>
-    <p><strong>Author:</strong> {{ book.author }}</p>
-    <p><strong>Description:</strong> {{ book.description }}</p>
-    <div class="buttons">
-    <form action="{% url 'borrow_book_page' book.pk %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-borrow">Confirm Borrow</button>
-    </form>
-    <a href="{% url 'book_detail_page' book.pk %}" class="btn btn-delete">Cancel</a>
-    </div>
+    <main class="book-detail">
+        <div class="container">
+                <h1>Borrowing Book</h1>
+                <p>Are you sure you want to borrow this book?</p>
+                <div class="book-image">
+                    {% if book.cover_image %}
+                        <img src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover Image">
+                    {% else %}
+                        <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
+                    {% endif %}
+                </div>
+                <p><strong>Title:</strong> {{ book.title }}</p>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Description:</strong> {{ book.description }}</p>
+                <div class="buttons">
+                    <form action="{% url 'borrow_book_page' book.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-borrow">Confirm Borrow</button>
+                    </form>
+                    <a href="{% url 'book_detail_page' book.pk %}" class="btn btn-delete">Cancel</a>
+                </div>
+        </div>
+    </main>
 {% endblock %}
