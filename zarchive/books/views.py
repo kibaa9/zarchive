@@ -2,9 +2,10 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, Avg, Q
 from django.http import request
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.timezone import now
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -114,6 +115,20 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     pk_url_kwarg = 'pk'
     template_name = 'books/book_delete_page.html'
     success_url = reverse_lazy('book_catalogue_page')
+
+
+class ApproveBookView(View):
+    model = Book
+    pk_url_kwarg = 'pk'
+
+    def post(self, request, pk):
+        book = get_object_or_404(Book, id=pk)
+
+        if request.user.is_staff or request.user.is_superuser:
+            book.is_approved = True
+            book.save()
+
+        return redirect('book_catalogue_page')
 
 
 class BookTopListView(AnnotateBookMixin, ListView):

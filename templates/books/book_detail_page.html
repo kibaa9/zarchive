@@ -44,6 +44,14 @@
                     {% if user == book.created_by or user_borrow %}
                         <p>Due Date: {{ user_borrow_info.return_date|date:"j F Y" }}</p>
                     {% endif %}
+                {% if not book.is_approved %}
+                            {% if user.is_staff %}
+                                <form method="POST" action="{% url 'approve_book_page' book.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-approve">Approve Book</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
                     <div class="buttons">
                         {% if book.is_available %}
                             <a href="{% url 'borrow_book_page' book.pk %}" class="btn btn-borrow">Borrow This Book</a>

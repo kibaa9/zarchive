@@ -9,7 +9,7 @@
         {% endif %}
         <section>
             {% for book in book_list %}
-                {% if book.is_approved or user == book.created_by %}
+                {% if book.is_approved or user == book.created_by or user.is_staff %}
                     <main class="main-content">
                     <div class="container">
                         <div class="card">
@@ -42,6 +42,14 @@
                                 {% else %}
                                     Not available
                                 {% endif %}</p>
+                                {% if not book.is_approved %}
+                                    {% if user.is_staff %}
+                                        <form method="POST" action="{% url 'approve_book_page' book.pk %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-approve">Approve Book</button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>

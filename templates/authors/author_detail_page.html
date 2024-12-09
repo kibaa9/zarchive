@@ -18,7 +18,7 @@
             {% endif %} {% if author.bio %}
                 <p class="bio">{{ author.bio }}</p>
             {% endif %}
-                {% if user.profile.is_author %}
+                {% if user.is_staff %}
                     <div class="buttons">
                         <a href="{% url 'author_edit_page' author.id %}" class="btn btn-edit">Edit Author</a>
                         <form action="{% url 'author_delete_page' author.id %}" method="POST" class="delete-form">

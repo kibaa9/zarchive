@@ -7,9 +7,9 @@
                 <h2>Create New Genre</h2>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-container">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <button type="submit" class="btn btn-primary">Create Genre</button>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">Create Genre</button>
                     </div>
                 </form>
             </div>
