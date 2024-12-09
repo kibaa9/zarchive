@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
@@ -6,7 +7,7 @@ from zarchive.genres.forms import GenreEditForm, GenreCreateForm
 from zarchive.genres.models import Genre
 
 
-class GenreListView(ListView):
+class GenreListView(LoginRequiredMixin, ListView):
     model = Genre
     template_name = 'genre/genre_catalogue_page.html'
     context_object_name = 'genre_list'
@@ -16,7 +17,7 @@ class GenreListView(ListView):
         return Genre.objects.all().order_by('name')
 
 
-class BookByGenreListView(ListView):
+class BookByGenreListView(LoginRequiredMixin, ListView):
     model = Book
     template_name = 'books/book_catalogue_page.html'
     context_object_name = 'book_list'
@@ -33,21 +34,21 @@ class BookByGenreListView(ListView):
         return context
 
 
-class GenreCreateView(CreateView):
+class GenreCreateView(LoginRequiredMixin, CreateView):
     models = Genre
     form_class = GenreCreateForm
     template_name = 'genre/genre_create_page.html'
     success_url = reverse_lazy('genre_catalogue_page')
 
 
-class GenreEditView(UpdateView):
+class GenreEditView(LoginRequiredMixin, UpdateView):
     model = Genre
     form_class = GenreEditForm
     template_name = 'genre/genre_edit_page.html'
     success_url = reverse_lazy('genre_catalogue_page')
 
 
-class GenreDeleteView(DeleteView):
+class GenreDeleteView(LoginRequiredMixin, DeleteView):
     model = Genre
     pk_url_kwarg = 'pk'
     template_name = 'genre/genre_delete_page.html'

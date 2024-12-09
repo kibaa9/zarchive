@@ -1,27 +1,29 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum, Avg
+from django.db.models import Sum, Avg, Q
 from django.http import request
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet, ModelViewSet
+
 from zarchive.books.forms import BookCreateForm, BookEditForm
+from zarchive.books.mixins import AnnotateBookMixin
 from zarchive.books.models import Book
+from zarchive.books.serializers import BookSerializer
 from zarchive.borrow.models import Borrow
 from zarchive.reviews.forms import ReviewCreateForm
 
 
-class BookListView(ListView):
+class BookListView(AnnotateBookMixin, ListView):
     model = Book
     template_name = 'books/book_catalogue_page.html'
     context_object_name = 'book_list'
     paginate_by = 10
-
-    def get_queryset(self):
-        return Book.objects.all().annotate(
-            total_rating=Sum('reviews__rating'),
-            average_rating=Avg('reviews__rating')
-        ).order_by('-created_at')
 
 
 class BookDetailView(LoginRequiredMixin, DetailView):
@@ -90,7 +92,7 @@ class BookCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
 
-class BookEditView(UpdateView):
+class BookEditView(LoginRequiredMixin, UpdateView):
     model = Book
     form_class = BookEditForm
     template_name = 'books/book_edit_page.html'
@@ -105,40 +107,28 @@ class BookEditView(UpdateView):
         return initial
 
 
-class BookDeleteView(DeleteView):
+class BookDeleteView(LoginRequiredMixin, DeleteView):
     model = Book
     pk_url_kwarg = 'pk'
     template_name = 'books/book_delete_page.html'
     success_url = reverse_lazy('book_catalogue_page')
 
 
-class BookTopListView(ListView):
+class BookTopListView(AnnotateBookMixin, ListView):
     model = Book
     template_name = 'books/book_catalogue_page.html'
     context_object_name = 'book_list'
     paginate_by = 10
 
-    def get_queryset(self):
-        return Book.objects.all().annotate(
-            total_rating=Sum('reviews__rating'),
-            average_rating=Avg('reviews__rating')
-        ).order_by('-average_rating')
 
-
-class BookAvailableListView(ListView):
+class BookAvailableListView(AnnotateBookMixin, LoginRequiredMixin, ListView):
     model = Book
     template_name = 'books/book_catalogue_page.html'
     context_object_name = 'book_list'
     paginate_by = 10
 
-    def get_queryset(self):
-        return Book.objects.all().filter(is_available=True).annotate(
-            total_rating=Sum('reviews__rating'),
-            average_rating=Avg('reviews__rating')
-        ).order_by('-average_rating')
 
-
-class BookBorrowListView(ListView):
+class BookBorrowListView(LoginRequiredMixin, ListView):
     model = Book
     template_name = 'books/book_catalogue_page.html'
     context_object_name = 'book_list'
@@ -148,7 +138,7 @@ class BookBorrowListView(ListView):
         return Book.objects.filter(borrows__borrower=self.request.user, borrows__is_returned=False).order_by('-borrows__return_date')
 
 
-class UserListBooksView(ListView):
+class UserListBooksView(LoginRequiredMixin, ListView):
     model = Book
     template_name = 'books/book_catalogue_page.html'
     context_object_name = 'book_list'
@@ -156,4 +146,47 @@ class UserListBooksView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Book.objects.filter(created_by=user)
+        return Book.objects.filter(created_by=user).order_by('-borrows__return_date')
+
+
+class SearchBooksView(ListView):
+    model = Book
+    template_name = 'books/book_search_page.html'
+    context_object_name = 'books'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '').strip()
+        if query:
+            return Book.objects.filter(
+                Q(title__icontains=query) |
+                Q(author__name__icontains=query) |
+                Q(genre__name__icontains=query) |
+                Q(publisher__icontains=query) |
+                Q(created_by__username__icontains=query)
+            ).distinct()
+        return Book.objects.none()
+
+
+class BookOverdueListView(LoginRequiredMixin, ListView):
+    model = Book
+    template_name = 'books/book_catalogue_page.html'
+    context_object_name = 'book_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        user = self.request.user
+        return Book.objects.filter(
+            created_by=user,
+            borrows__is_returned=False,
+            borrows__return_date__lt=now()
+        ).distinct().order_by('-borrows__return_date')
+
+
+class BookViewSet(ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)

@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView
 from zarchive.reviews.forms import ReviewEditForm
 from zarchive.reviews.models import Review
 
 
-class ReviewEditView(UpdateView):
+class ReviewEditView(LoginRequiredMixin, UpdateView):
     model = Review
     form_class = ReviewEditForm
     template_name = 'reviews/review_edit_page.html'
@@ -13,7 +14,7 @@ class ReviewEditView(UpdateView):
         return reverse_lazy('book_detail_page', kwargs={'pk': self.object.book.pk})
 
 
-class ReviewDeleteView(DeleteView):
+class ReviewDeleteView(LoginRequiredMixin, DeleteView):
     model = Review
     pk_url_kwarg = 'pk'
     template_name = 'reviews/review_delete_page.html'

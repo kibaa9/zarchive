@@ -1,5 +1,6 @@
 from datetime import timedelta
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.utils import timezone
 from django.utils.timezone import now
@@ -8,7 +9,7 @@ from zarchive.books.models import Book
 from zarchive.borrow.models import Borrow
 
 
-class BorrowBookView(CreateView):
+class BorrowBookView(LoginRequiredMixin, CreateView):
     model = Borrow
     fields = []
     template_name = 'borrow/borrow_book_page.html'
@@ -41,7 +42,7 @@ class BorrowBookView(CreateView):
         return context
 
 
-class ReturnBookView(UpdateView):
+class ReturnBookView(LoginRequiredMixin, UpdateView):
     model = Borrow
     fields = []
     template_name = 'borrow/return_book_page.html'
