@@ -23,7 +23,9 @@ class BookBaseForm(forms.ModelForm):
 
     pages = forms.CharField()
 
-    year_of_publish = forms.CharField()
+    year_of_publish = forms.CharField(
+        help_text='Please enter and year between 1800 nd 2100',
+    )
 
     publisher = forms.CharField()
 

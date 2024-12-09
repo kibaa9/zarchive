@@ -84,7 +84,9 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     model = Book
     form_class = BookCreateForm
     template_name = 'books/create_book_page.html'
-    success_url = reverse_lazy('home-page')
+
+    def get_success_url(self):
+        return reverse_lazy('book_detail_page', kwargs={'pk': self.object.pk})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -184,9 +186,11 @@ class BookOverdueListView(LoginRequiredMixin, ListView):
 
 
 class BookViewSet(ModelViewSet):
-    queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Book.objects.filter(is_approved=True)
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)

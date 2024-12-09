@@ -9,41 +9,43 @@
         {% endif %}
         <section>
             {% for book in book_list %}
-                <main class="main-content">
-                <div class="container">
-                    <div class="card">
-                        {% if book.cover_image %}
-                            <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                            <img id=book-image src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover">
-                        {% else %}
-                            <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                            <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
-                        {% endif %}
-                        <div class="card-content">
-                            <h3>{{ book.title }}</h3>
-                            <h4>By</h4>
-                            <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author }}</a>
-                            <p>Genres:
-                                {% for genre in book.genre.all %}
-                                    <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
-                                    {% if not forloop.last %}
-                                    {% endif %}
-                                {% endfor %}</p>
-                            <p class="description">Description: {{ book.description }}</p>
-                            <p><strong>Average Rating:</strong>
-                                {% if book.average_rating %}
-                                    {{ book.average_rating|floatformat:1 }} / 5
-                                {% else %}
-                                    No ratings yet
-                                {% endif %} </p>
-                            <p>{% if book.is_available %}
-                                <strong>Available</strong>
+                {% if book.is_approved or user == book.created_by %}
+                    <main class="main-content">
+                    <div class="container">
+                        <div class="card">
+                            {% if book.cover_image %}
+                                <a id="logo" href="{% url 'book_detail_page' book.id %}">
+                                <img id=book-image src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover">
                             {% else %}
-                                Not available
-                            {% endif %}</p>
+                                <a id="logo" href="{% url 'book_detail_page' book.id %}">
+                                <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
+                            {% endif %}
+                            <div class="card-content">
+                                <h3>{{ book.title }}</h3>
+                                <h4>By</h4>
+                                <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author }}</a>
+                                <p>Genres:
+                                    {% for genre in book.genre.all %}
+                                        <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
+                                        {% if not forloop.last %}
+                                        {% endif %}
+                                    {% endfor %}</p>
+                                <p class="description">Description: {{ book.description }}</p>
+                                <p><strong>Average Rating:</strong>
+                                    {% if book.average_rating %}
+                                        {{ book.average_rating|floatformat:1 }} / 5
+                                    {% else %}
+                                        No ratings yet
+                                    {% endif %} </p>
+                                <p>{% if book.is_available %}
+                                    <strong>Available</strong>
+                                {% else %}
+                                    Not available
+                                {% endif %}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
             <div>
                 {% if is_paginated %}

@@ -6,9 +6,11 @@
             <div class="form">
                 <h2>Create New Book</h2>
                 <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <button type="submit" class="btn btn-primary">Create book</button>
+                    <div class="form-container">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">Create book</button>
+                    </div>
                 </form>
             </div>
         </section>

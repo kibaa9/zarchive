@@ -8,6 +8,7 @@ from zarchive.genres.models import Genre
 class Book(models.Model):
     title = models.CharField(
         max_length=100,
+        unique=True,
     )
 
     author = models.ForeignKey(
@@ -22,7 +23,9 @@ class Book(models.Model):
         to=Genre,
     )
 
-    pages = models.PositiveSmallIntegerField()
+    pages = models.PositiveSmallIntegerField(
+        validators=(MinValueValidator(1),)
+    )
 
     year_of_publish = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1800), MaxValueValidator(2100)]
@@ -53,6 +56,15 @@ class Book(models.Model):
     is_available = models.BooleanField(
         default=True,
     )
+
+    is_approved = models.BooleanField(
+        default=False,
+    )
+
+    class Meta:
+        permissions = [
+            ("can_approve_books", "Can approve books"),
+        ]
 
     def __str__(self):
         return self.title

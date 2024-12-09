@@ -23,10 +23,6 @@ class Profile(models.Model):
         null=True,
     )
 
-    is_author = models.BooleanField(
-        default=False,
-    )
-
     date_of_birth = models.DateField(
         blank=True,
         null=True,

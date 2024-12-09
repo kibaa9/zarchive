@@ -12,7 +12,7 @@ class CreateUserPage(CreateView):
     template_name = 'user/create_user.html'
     model = AppUser
     form_class = AppUserForm
-    success_url = reverse_lazy('home-page')
+    success_url = reverse_lazy('login_page')
 
 
 class LoginPage(LoginView):
