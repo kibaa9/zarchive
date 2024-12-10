@@ -198,7 +198,7 @@ class BookOverdueListView(LoginRequiredMixin, ListView):
 
 class BookViewSet(ModelViewSet):
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Book.objects.filter(is_approved=True)
