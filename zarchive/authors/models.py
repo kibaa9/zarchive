@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.utils.text import slugify
 
@@ -23,8 +24,8 @@ class Author(models.Model):
         null=True,
     )
 
-    profile_picture = models.ImageField(
-        upload_to='static/images/author_profile_pictures',
+    profile_picture = CloudinaryField(
+        'image',
         blank=True,
         null=True,
     )

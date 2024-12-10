@@ -1,6 +1,6 @@
 .book-detail {
     padding: 40px 0;
-    position: relative; /* Needed for absolute positioning of the button */
+    position: relative;
 }
 
 .book-detail-wrapper {
@@ -65,7 +65,7 @@
 }
 
 .btn-approve {
-    background-color: #28a745; /* Green color for approve */
+    background-color: #28a745;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -86,6 +86,7 @@
     .book-image {
         margin-bottom: 20px;
         flex: 0 1 100%;
+        max-width: 300px;
     }
 
     .book-info {
@@ -99,5 +100,35 @@
 
     .book-info p {
         font-size: 1rem;
+    }
+
+    .approve-form {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .book-image {
+        max-width: 100%;
+    }
+
+    .book-info {
+        padding: 0 10px;
+    }
+
+    .book-info h1 {
+        font-size: 1.6rem;
+    }
+
+    .book-info p {
+        font-size: 0.9rem;
+    }
+
+    .btn-approve {
+        padding: 8px 16px;
+        font-size: 14px;
     }
 }

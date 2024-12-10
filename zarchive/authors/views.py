@@ -25,7 +25,7 @@ class AuthorDetailView(LoginRequiredMixin, DetailView):
 class AuthorCreateView(LoginRequiredMixin, CreateView):
     model = Author
     form_class = AuthorCreateForm
-    template_name = 'books/create_book_page.html'
+    template_name = 'authors/create_author_page.html'
     success_url = reverse_lazy('home-page')
 
 

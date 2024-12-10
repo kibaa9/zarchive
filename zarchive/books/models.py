@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from zarchive.accounts.models import AppUser
@@ -37,8 +38,8 @@ class Book(models.Model):
         null=True,
     )
 
-    cover_image = models.ImageField(
-        upload_to='static/images/books/covers/',
+    cover_image = CloudinaryField(
+        'image',
         blank=True,
         null=True,
     )

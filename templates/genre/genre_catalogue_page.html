@@ -2,10 +2,21 @@
 {% block content %}
     <main>
         <h1>Genres</h1>
+    {% if user.is_staff %}
+    <a href="{% url 'genre_create_page' %}" class="btn btn-borrow">Create Genre</a>
+    {% endif %}
         <ul>
             {% for genre in genre_list %}
                 <li>
                     <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
+                {% if user.is_staff %}
+     <p><a href="{% url 'genre_edit_page' genre.id %}" class="btn btn-edit">Edit Genre</a></li>
+                            <form action="{% url 'genre_delete_page' genre.id %}" method="POST" class="delete-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-delete">Delete Genre</button>
+                            </form>
+                    </p>
+                {% endif %}
                 </li>
             {% endfor %}
         </ul>

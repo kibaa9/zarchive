@@ -18,7 +18,7 @@
                                 <img id=book-image src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover">
                             {% else %}
                                 <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                                <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
+                                <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851540/book_cover_placeholder_msdxcz.png" alt="Book Cover">
                             {% endif %}
                             <div class="card-content">
                                 <h3>{{ book.title }}</h3>

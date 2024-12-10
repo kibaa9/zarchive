@@ -1,15 +1,26 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% block content %}
-            <h1>Our Authors</h1>
-        <div class="author-cards-container">
-            {% for author in author_list %}
-                <div class="author-card">
-                    <img src="{{ author.image.url }}" alt="{{ author.name }}">
-                    <h3>{{ author.name }}</h3>
-                    <a href="{% url 'author_detail_page' author.id %}">View Details</a>
-                </div>
-            {% endfor %}
-        </div>
+    <main>
+    <h1 style="text-align:center;">Our Authors</h1>
+    {% if user.is_staff %}
+        <a href="{% url 'author_create_page' %}" class="btn btn-borrow">Create Author</a>
+    {% endif %}
+    <div class="author-cards-container">
+        {% for author in author_list %}
+            <div class="author-card">
+                {% if author.profile_picture %}
+                    <a id="logo" href="{% url 'author_detail_page' author.id %}">
+                    <img src="{{ author.profile_picture.url }}" alt="{{ author.name }}">
+                {% else %}
+                    <a id="logo" href="{% url 'author_detail_page' author.id %}">
+                    <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851541/user_placeholder_uoaoya.png"
+                         alt="{{ author.name }}">
+                {% endif %}
+                <h3>{{ author.name }}</h3>
+                <a href="{% url 'author_detail_page' author.id %}">View Details</a>
+            </div>
+        {% endfor %}
+    </div>
     </main>
 {% endblock %}

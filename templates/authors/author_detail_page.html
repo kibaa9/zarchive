@@ -6,9 +6,9 @@
         <div class="author-detail-container">
             <div class="author-info">
                 {% if author.profile_picture %}
-                    <img src="{{ author.image.url }}" alt="{{ author.name }}">
+                    <img src="{{ author.profile_picture.url }}" alt="{{ author.name }}">
                 {% else %}
-                    <img src="{% static 'images/user_placeholder.png' %}" alt="{{ author.name }}">
+                    <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851541/user_placeholder_uoaoya.png" alt="{{ author.name }}">
                 {% endif %}
                 <h2>{{ author.name }}</h2>
                 {% if author.date_of_birth %}
@@ -39,7 +39,7 @@
                                     <img id=logo-img src="{{ book.cover_image }}" alt="{{ book.title }} Cover">
                                 {% else %}
                                     <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                                    <img src="{% static 'images/book_cover_placeholder.png' %}" alt="Book Cover">
+                                    <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851540/book_cover_placeholder_msdxcz.png" alt="Book Cover">
                                 {% endif %}
                                 <a href="{% url 'book_detail_page' book.id %}">{{ book.title }}</a>
                             </li>

@@ -2,8 +2,6 @@
   height: 80px;
 }
 
-
-
 #profile-img {
   height: 100px;
 }
@@ -37,4 +35,55 @@
 .menu a:hover,
 .user a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  #logo-img {
+    height: 60px;
+  }
+
+  #profile-img {
+    height: 80px;
+  }
+
+  .menu a,
+  .user a {
+    margin: 10px 0;
+    white-space: normal;
+  }
+
+  .user p {
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    padding: 15px;
+  }
+
+  #logo-img {
+    height: 50px;
+  }
+
+  #profile-img {
+    height: 70px;
+  }
+
+  .menu a,
+  .user a {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .user p {
+    font-size: 14px;
+    margin: 8px 0;
+  }
 }

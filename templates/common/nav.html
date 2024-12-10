@@ -1,13 +1,14 @@
 {% load static %}
 <a id="logo" href="{% url 'home-page' %}">
-    <img id="logo-img" src="{% static 'images/site_logo.png' %}" alt="logo"/>
+    <img id="logo-img" src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851538/site_logo_vb0hbg.png" alt="logo"/>
 </a>
 <nav class="nav">
     <div class="menu">
         <a href="{% url 'book_catalogue_page' %}">Book Catalogue</a>
         <a href="{% url 'book_search_page' %}">Search</a>
         <a href="{% url 'book_top_catalogue_page' %}">Top Books</a>
-        <a href="{% url 'book_available_catalogue_page' %}">Available Books</a>
+        <a href="{% url 'genre_catalogue_page' %}">Books By Genre</a>
+        <a href="{% url 'author_list_page' %}">Books By Author</a>
         {% if request.user.is_authenticated %}
             <a href="{% url 'book_borrowed_catalogue_page' %}">Your Borrowed Books</a>
             {% if request.user.profile.is_author %}

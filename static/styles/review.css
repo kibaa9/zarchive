@@ -74,3 +74,67 @@
     justify-content: center;
     gap: 10px;
 }
+
+@media (max-width: 768px) {
+    .review-container {
+        margin: 20px 10px;
+    }
+
+    .add-review form {
+        max-width: 100%;
+    }
+
+    .add-review button {
+        max-width: 100%;
+    }
+
+    .all-reviews,
+    .your-review {
+        max-width: 100%;
+    }
+
+    .all-reviews li,
+    .your-review {
+        padding: 10px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .your-review .buttons a,
+    .your-review .buttons button {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* Small Devices (Phones) */
+@media (max-width: 480px) {
+    .review-container {
+        margin: 10px;
+    }
+
+    .add-review form {
+        padding: 15px;
+    }
+
+    .add-review button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .all-reviews li {
+        padding: 8px;
+    }
+
+    .your-review {
+        padding: 15px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

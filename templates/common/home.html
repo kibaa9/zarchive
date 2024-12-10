@@ -1,15 +1,15 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% block content %}
-<section class="hero">
-    <div class="container">
-        <h2>Discover a World of Knowledge and Fantasy</h2>
-        <p>Explore our extensive collection of books and digital resources.</p>
-        <a href="{% url 'book_catalogue_page' %}" class="btn">Explore Now</a>
-    </div>
-<div style="text-align:center;">
-       <img style="width: 100%; max-width: 500px; height: auto; border-radius: 8px;
-        transform: translateY(30px);" src="{% static 'images/site_background.png' %}">
-</div>
-</section>
+    <section class="hero">
+        <div class="container">
+            <h2>Discover a World of Knowledge and Fantasy</h2>
+            <p>Explore our extensive collection of books and digital resources.</p>
+        </div>
+        <div style="text-align:center;">
+            <a id="logo" href="{% url 'book_catalogue_page' %}">
+                <img style="width: 100%; max-width: 500px; height: auto; border-radius: 8px;
+        transform: translateY(30px)" src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851543/site_background_idrxzp.png">
+        </div>
+    </section>
 {% endblock %}

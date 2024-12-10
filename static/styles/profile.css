@@ -46,6 +46,7 @@
     font-weight: bold;
 }
 
+
 @media (max-width: 768px) {
     .profile-detail-wrapper {
         flex-direction: column;
@@ -67,6 +68,28 @@
     }
 
     .profile-info p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-detail-wrapper {
+        padding: 20px;
+    }
+
+    .profile-image {
+        max-width: 150px;
+    }
+
+    .profile-info h1 {
+        font-size: 1.6rem;
+    }
+
+    .profile-info p {
+        font-size: 0.9rem;
+    }
+
+    .profile-info strong {
         font-size: 1rem;
     }
 }

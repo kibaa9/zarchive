@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.utils.text import slugify
 from zarchive.accounts.models import AppUser
@@ -32,8 +33,8 @@ class Profile(models.Model):
         auto_now_add=True,
     )
 
-    profile_picture = models.ImageField(
-        upload_to='static/images/profile_pictures/',
+    profile_picture = CloudinaryField(
+        'image',
         blank=True,
         null=True,
     )

@@ -14,7 +14,6 @@ body {
     max-width: 400px;
     margin: 50px auto;
     text-align: center;
-
 }
 
 h2 {
@@ -42,7 +41,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 }
 
 .submit-btn {
-        background-color: #85604f;
+    background-color: #85604f;
     color: white;
     border-color: #694b35;
     padding: 10px 20px;
@@ -63,4 +62,38 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+    .form-container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], .submit-btn {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        max-width: 90%;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], .submit-btn {
+        font-size: 14px;
+        padding: 8px;
+    }
 }

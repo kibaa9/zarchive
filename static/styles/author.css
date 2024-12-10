@@ -130,3 +130,83 @@
 .author-books a:hover {
     color: #0056b3;
 }
+
+@media (max-width: 480px) {
+    .author-cards-container {
+        gap: 8px;
+    }
+
+    .author-card {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .author-info {
+        width: 100%;
+    }
+
+    .author-books {
+        width: 100%;
+    }
+
+    .author-books h3,
+    .author-info h2 {
+        font-size: 18px;
+    }
+
+    .book-item img {
+        width: 40px;
+    }
+
+    .author-card h3 {
+        font-size: 16px;
+    }
+
+    .author-card a {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .author-cards-container {
+        gap: 12px;
+    }
+
+    .author-card {
+        width: 45%;
+    }
+
+    .author-info {
+        width: 100%;
+    }
+
+    .author-books {
+        width: 100%;
+    }
+
+    .author-books h3 {
+        font-size: 18px;
+    }
+
+    .author-card h3 {
+        font-size: 16px;
+    }
+
+    .author-card a {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .author-card {
+        width: 220px;
+    }
+
+    .author-info {
+        width: 300px;
+    }
+
+    .author-books {
+        width: 500px;
+    }
+}

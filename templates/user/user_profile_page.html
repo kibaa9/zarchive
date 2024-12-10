@@ -6,11 +6,12 @@
         <main class="profile-detail">
             <div class="container">
                 <div class="profile-detail-wrapper">
-                    <div class="profile-image">
-                        {% if request.user.profile.profile_picture %}
-                            <img id="profile-img" src="{{ user.profile.profile_picture.url }}" alt="profile img"/>
+                    <div class="author-card">
+                        {% if user.profile.profile_picture %}
+                            <img src="{{ user.profile.profile_picture.url }}" alt="{{ user.profile.name }}">
                         {% else %}
-                            <img id="profile-img" src="{% static 'images/user_placeholder.png' %}" alt="profile img"/>
+                            <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851541/user_placeholder_uoaoya.png"
+                                 alt="{{ user.profile.name }}">
                         {% endif %}
                     </div>
                     <div class="profile-info">
