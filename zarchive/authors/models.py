@@ -2,11 +2,14 @@ from cloudinary.models import CloudinaryField
 from django.db import models
 from django.utils.text import slugify
 
+from zarchive.validators import AlphaValidator
+
 
 class Author(models.Model):
     name = models.CharField(
         max_length=100,
         unique=True,
+        validators=[AlphaValidator(), ],
     )
 
     bio = models.TextField(

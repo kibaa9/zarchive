@@ -113,7 +113,7 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('book_catalogue_page')
 
 
-class ApproveBookView(View):
+class ApproveBookView(LoginRequiredMixin, View):
     model = Book
     pk_url_kwarg = 'pk'
 

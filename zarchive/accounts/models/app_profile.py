@@ -2,6 +2,7 @@ from cloudinary.models import CloudinaryField
 from django.db import models
 from django.utils.text import slugify
 from zarchive.accounts.models import AppUser
+from zarchive.validators import AlphaValidator
 
 
 class Profile(models.Model):
@@ -16,6 +17,7 @@ class Profile(models.Model):
         max_length=100,
         blank=True,
         null=True,
+        validators=[AlphaValidator(), ]
     )
 
     description = models.TextField(

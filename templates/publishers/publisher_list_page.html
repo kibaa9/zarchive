@@ -5,15 +5,41 @@
     <main class="publisher-list">
         <div class="container">
             <h1>Publishers</h1>
+            {% if user.is_staff %}
+                <a href="{% url 'publisher_create_page' %}" class="btn btn-borrow">Create Publisher</a>
+            {% endif %}
             <ul>
                 {% for publisher in publishers %}
                     <li>
                         <a href="{% url 'publisher_detail_page' publisher.id %}">{{ publisher.name }}</a>
+                        {% if user.is_staff %}
+                            <p><a href="{% url 'publisher_edit_page' publisher.id %}" class="btn btn-edit">Edit
+                                Publisher</a></li>
+                            <form action="{% url 'publisher_delete_page' publisher.id %}" method="POST" class="delete-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-delete">Delete Publisher</button>
+                            </form>
+                            </p>
+                        {% endif %}
                     </li>
                 {% empty %}
                     <p>No publishers available.</p>
                 {% endfor %}
             </ul>
+        </div>
+        {% if is_paginated %}
+            <div style="text-align:center;">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+            </div>
+        {% endif %}
         </div>
     </main>
 {% endblock %}

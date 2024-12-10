@@ -9,6 +9,7 @@
         <a href="{% url 'book_top_catalogue_page' %}">Top Books</a>
         <a href="{% url 'genre_catalogue_page' %}">Books By Genre</a>
         <a href="{% url 'author_list_page' %}">Books By Author</a>
+        <a href="{% url 'publisher_list_page' %}">Books By Publisher</a>
         {% if request.user.is_authenticated %}
             <a href="{% url 'book_borrowed_catalogue_page' %}">Your Borrowed Books</a>
             {% if request.user.profile.is_author %}
