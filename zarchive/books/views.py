@@ -1,6 +1,8 @@
+from asgiref.sync import sync_to_async
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum, Avg, Q
+from django.db.models import Avg, Q
+from django.http import JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.timezone import now
@@ -198,10 +200,19 @@ class BookOverdueListView(LoginRequiredMixin, ListView):
 
 class BookViewSet(ModelViewSet):
     serializer_class = BookSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Book.objects.filter(is_approved=True)
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+
+async def all_books_view(request):
+    book_names = await sync_to_async(get_all_books)()
+    return JsonResponse({'book_names': book_names})
+
+
+def get_all_books():
+    return list(Book.objects.values_list('title', flat=True))
