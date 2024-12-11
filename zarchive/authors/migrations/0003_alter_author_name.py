@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='author',
             name='name',
-            field=models.CharField(max_length=100, unique=True, validators=[zarchive.validators.AlphaValidator()]),
+            field=models.CharField(max_length=100, unique=True, validators=[
+                zarchive.validators.AlphaValidator()]),
         ),
     ]

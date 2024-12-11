@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from django.db import models
 
-from zarchive.accounts.models import AppUser, Profile
+from zarchive.accounts.models import Profile
 
 
 class AppUserForm(UserCreationForm):
