@@ -1,7 +1,7 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% block content %}
-    <main>
+    <main style="text-align:center">
     <h1 style="text-align:center;">Our Authors</h1>
     {% if user.is_staff %}
         <a href="{% url 'author_create_page' %}" class="btn btn-borrow">Create Author</a>

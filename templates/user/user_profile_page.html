@@ -1,31 +1,30 @@
 {% extends 'common/base.html' %}
 {% load static %}
-
 {% block content %}
     {% if request.user.is_authenticated %}
         <main class="profile-detail">
             <div class="container">
                 <div class="profile-detail-wrapper">
                     <div class="author-card">
-                        {% if user.profile.profile_picture %}
-                            <img src="{{ user.profile.profile_picture.url }}" alt="{{ user.profile.name }}">
+                        {% if profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" alt="{{ profile.name }}">
                         {% else %}
                             <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851541/user_placeholder_uoaoya.png"
-                                 alt="{{ user.profile.name }}">
+                                 alt="{{ profile.name }}">
                         {% endif %}
                     </div>
                     <div class="profile-info">
-                        <h1>{{ user.username }}</h1>
-                        <p><strong>Name: </strong> {{ user.profile.name }}</p>
-                        <p><strong>Email: </strong> {{ user.email }}</p>
-                        <p><strong>Date of birth: </strong> {{ user.profile.date_of_birth|date:"d F Y" }}</p>
-                        <p><strong>Bio: </strong> {{ user.profile.description }}</p>
-                        <p><strong>Joined on: </strong> {{ user.profile.date_of_registration|date:"F d, Y" }}</p>
+                        <h1>{{ profile.user.username }}</h1>
+                        <p><strong>Name: </strong> {{ profile.name }}</p>
+                        <p><strong>Email: </strong> {{ profile.user.email }}</p>
+                        <p><strong>Date of birth: </strong> {{ profile.date_of_birth|date:"d F Y" }}</p>
+                        <p><strong>Bio: </strong> {{ profile.description }}</p>
+                        <p><strong>Joined on: </strong> {{ profile.date_of_registration|date:"F d, Y" }}</p>
                         {% if request.user.profile.slug == profile.slug %}
                             <div class="buttons">
-                                <a href="{% url 'profile_edit_page' user.username %}" class="btn btn-edit">Edit
+                                <a href="{% url 'profile_edit_page' profile.slug %}" class="btn btn-edit">Edit
                                     Profile</a>
-                                <form action="{% url 'user_delete_page' user.username %}" method="POST"
+                                <form action="{% url 'user_delete_page' profile.slug %}" method="POST"
                                       class="delete-form">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-delete">Delete Profile</button>
@@ -37,6 +36,6 @@
             </div>
         </main>
     {% else %}
-        <h2>You're not logged in<a href="{% url 'login_page' %}">Log In</a></h2>
+        <h2>You're not logged in. <a href="{% url 'login_page' %}">Log In</a></h2>
     {% endif %}
 {% endblock %}

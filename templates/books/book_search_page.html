@@ -1,59 +1,59 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% block content %}
-    <h1 style="text-align:center;" id="catalog">Book Catalog</h1>
-    <form method="get" action="{% url 'book_search_page' %}">
-        <input type="text" name="q" placeholder="Search for books..." value="{{ request.GET.q }}">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-    {% if books %}
-        <h2 style="text-align:center;">Search Results:</h2>
-        {% for book in books %}
-            <main class="main-content">
-            <div class="container">
-                <div class="card">
-                    {% if book.cover_image %}
-                        <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                        <img id=book-image src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover">
-                    {% else %}
-                        <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                        <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851540/book_cover_placeholder_msdxcz.png"
-                             alt="Book Cover">
-                    {% endif %}
-                    <div class="card-content">
-                        <h3>{{ book.title }}</h3>
-                        <h4>By</h4>
-                        <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author }}</a>
-                        <p>Genres:
-                            {% for genre in book.genre.all %}
-                                <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
-                                {% if not forloop.last %}
-                                {% endif %}
-                            {% endfor %}</p>
-                        <p class="description">Description: {{ book.description }}</p>
-                        <p><strong>Average Rating:</strong>
-                            {% if book.average_rating %}
-                                {{ book.average_rating|floatformat:1 }} / 5
-                            {% else %}
-                                No ratings yet
-                            {% endif %} </p>
-                        <p>{% if book.is_available %}
-                            <strong>Available</strong>
+    <main style="text-align:center" class="main-content">
+        <h1 style="text-align:center;" id="catalog">Book Catalog</h1>
+        <form method="get" action="{% url 'book_search_page' %}">
+            <input type="text" name="q" placeholder="Search for books..." value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        {% if books %}
+            <h2 style="text-align:center;">Search Results:</h2>
+            {% for book in books %}
+                <div class="container">
+                    <div class="card">
+                        {% if book.cover_image %}
+                            <a id="logo" href="{% url 'book_detail_page' book.id %}">
+                            <img id=book-image src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover">
                         {% else %}
-                            <h3 style="text-align:center;">Not available</h3>
-                        {% endif %}</p>
+                            <a id="logo" href="{% url 'book_detail_page' book.id %}">
+                            <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851540/book_cover_placeholder_msdxcz.png"
+                                 alt="Book Cover">
+                        {% endif %}
+                        <div class="card-content">
+                            <h3>{{ book.title }}</h3>
+                            <h4>By</h4>
+                            <a href="{% url 'author_detail_page' book.author.id %}">{{ book.author }}</a>
+                            <p>Genres:
+                                {% for genre in book.genre.all %}
+                                    <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
+                                    {% if not forloop.last %}
+                                    {% endif %}
+                                {% endfor %}</p>
+                            <p class="description">Description: {{ book.description }}</p>
+                            <p><strong>Average Rating:</strong>
+                                {% if book.average_rating %}
+                                    {{ book.average_rating|floatformat:1 }} / 5
+                                {% else %}
+                                    No ratings yet
+                                {% endif %} </p>
+                            <p>{% if book.is_available %}
+                                <strong>Available</strong>
+                            {% else %}
+                                <h3 style="text-align:center;">Not available</h3>
+                            {% endif %}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-
-        <div class="pagination">
-            {% for i in books.paginator.page_range %}
-                <a href="?q={{ request.GET.q }}&page={{ i }}">{{ i }}</a>
             {% endfor %}
-        </div>
-    {% else %}
-        <h2 style="text-align:center;">No entries found.</h2>
-    {% endif %}
-</main>
+
+            <div class="pagination">
+                {% for i in books.paginator.page_range %}
+                    <a href="?q={{ request.GET.q }}&page={{ i }}">{{ i }}</a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2 style="text-align:center;">No entries found.</h2>
+        {% endif %}
+    </main>
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends 'common/base.html' %}
 {% block content %}
-    <main>
+    <main style="text-align:center">
         <h1>Genres</h1>
     {% if user.is_staff %}
     <a href="{% url 'genre_create_page' %}" class="btn btn-borrow">Create Genre</a>
     {% endif %}
-        <ul>
+        <p>
             {% for genre in genre_list %}
                 <li>
                     <a href="{% url 'books_by_genre_page' genre.id %}">{{ genre.name }}</a>
@@ -19,7 +19,7 @@
                 {% endif %}
                 </li>
             {% endfor %}
-        </ul>
+        </p>
 
         {% if is_paginated %}
             <div style="text-align:center;">

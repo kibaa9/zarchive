@@ -22,6 +22,16 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = '__all__'
 
+    description = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                'rows': 10,
+                'cols': 55,
+            }
+        )
+    )
+
 
 class EditProfileForm(ProfileForm):
     class Meta:

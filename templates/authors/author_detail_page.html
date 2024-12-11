@@ -36,7 +36,7 @@
                             <li class="book-item">
                                 {% if book.cover_image %}
                                     <a id="logo" href="{% url 'book_detail_page' book.id %}">
-                                    <img id=logo-img src="{{ book.cover_image }}" alt="{{ book.title }} Cover">
+                                    <img id=logo-img src="{{ book.cover_image.url }}" alt="{{ book.title }} Cover">
                                 {% else %}
                                     <a id="logo" href="{% url 'book_detail_page' book.id %}">
                                     <img src="https://res.cloudinary.com/dp64szeji/image/upload/v1733851540/book_cover_placeholder_msdxcz.png" alt="Book Cover">
